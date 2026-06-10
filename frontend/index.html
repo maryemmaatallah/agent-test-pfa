@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤖 Plateforme de Test IA</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            min-height: 100vh;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background: #1e293b;
+            padding: 16px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #334155;
+        }
+        .navbar h1 { font-size: 20px; color: #38bdf8; }
+        .navbar span { font-size: 13px; color: #64748b; }
+
+        /* LAYOUT */
+        .container { padding: 32px; max-width: 1200px; margin: 0 auto; }
+
+        /* STATS */
+        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
+        .stat-card {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #334155;
+            text-align: center;
+        }
+        .stat-card h2 { font-size: 36px; font-weight: 700; margin-bottom: 4px; }
+        .stat-card p { font-size: 13px; color: #64748b; }
+        .stat-total { color: #38bdf8; }
+        .stat-succes { color: #22c55e; }
+        .stat-echec { color: #ef4444; }
+        .stat-taux { color: #f59e0b; }
+
+        /* SECTIONS */
+        .section {
+            background: #1e293b;
+            border-radius: 12px;
+            border: 1px solid #334155;
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+        .section-header {
+            padding: 16px 24px;
+            border-bottom: 1px solid #334155;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .section-header h2 { font-size: 16px; font-weight: 600; }
+        .section-body { padding: 24px; }
+
+        /* BOUTONS */
+        .btn {
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+        .btn:hover { opacity: 0.8; }
+        .btn-primary { background: #38bdf8; color: #0f172a; }
+        .btn-success { background: #22c55e; color: white; }
+        .btn-danger { background: #ef4444; color: white; }
+        .btn-warning { background: #f59e0b; color: #0f172a; }
+
+        /* TABLE */
+        table { width: 100%; border-collapse: collapse; }
+        th {
+            text-align: left;
+            padding: 10px 16px;
+            font-size: 12px;
+            color: #64748b;
+            text-transform: uppercase;
+            border-bottom: 1px solid #334155;
+        }
+        td { padding: 12px 16px; border-bottom: 1px solid #1e293b; font-size: 14px; }
+        tr:hover td { background: #0f172a; }
+
+        /* BADGES */
+        .badge {
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .badge-succes { background: #14532d; color: #22c55e; }
+        .badge-echec { background: #450a0a; color: #ef4444; }
+        .badge-auth { background: #1e3a5f; color: #38bdf8; }
+        .badge-secu { background: #3b1f5e; color: #a78bfa; }
+        .badge-general { background: #1e293b; color: #94a3b8; }
+
+        /* FORMULAIRE */
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group label { font-size: 13px; color: #94a3b8; }
+        .form-group input, .form-group select, .form-group textarea {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 10px 12px;
+            color: #e2e8f0;
+            font-size: 14px;
+            outline: none;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: #38bdf8;
+        }
+        .form-group textarea { resize: vertical; min-height: 80px; }
+        .form-full { grid-column: 1 / -1; }
+
+        /* LOADING */
+        .loading { display: none; align-items: center; gap: 8px; color: #f59e0b; font-size: 14px; }
+        .spinner {
+            width: 16px; height: 16px;
+            border: 2px solid #334155;
+            border-top-color: #f59e0b;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* TOAST */
+        .toast {
+            position: fixed; bottom: 24px; right: 24px;
+            background: #1e293b; border: 1px solid #334155;
+            padding: 12px 20px; border-radius: 10px;
+            font-size: 14px; display: none;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <h1>🤖 Plateforme de Test IA</h1>
+    <span id="derniere-maj">Chargement...</span>
+</nav>
+
+<div class="container">
+
+    <!-- STATS -->
+    <div class="stats">
+        <div class="stat-card">
+            <h2 class="stat-total" id="stat-total">-</h2>
+            <p>Cas de test</p>
+        </div>
+        <div class="stat-card">
+            <h2 class="stat-succes" id="stat-succes">-</h2>
+            <p>Succès</p>
+        </div>
+        <div class="stat-card">
+            <h2 class="stat-echec" id="stat-echec">-</h2>
+            <p>Échecs</p>
+        </div>
+        <div class="stat-card">
+            <h2 class="stat-taux" id="stat-taux">-%</h2>
+            <p>Taux de succès</p>
+        </div>
+    </div>
+
+    <!-- CAS DE TEST -->
+    <div class="section">
+        <div class="section-header">
+            <h2>📋 Cas de Test</h2>
+            <div style="display:flex; gap:10px; align-items:center;">
+                <div class="loading" id="loading-tous">
+                    <div class="spinner"></div>
+                    <span>Tests en cours...</span>
+                </div>
+                <button class="btn btn-success" onclick="executerTous()">▶️ Lancer tous les tests</button>
+            </div>
+        </div>
+        <div class="section-body" style="padding:0;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Catégorie</th>
+                        <th>URL</th>
+                        <th>Date création</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="table-cas"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- AJOUTER CAS DE TEST -->
+    <div class="section">
+        <div class="section-header">
+            <h2>➕ Ajouter un cas de test</h2>
+        </div>
+        <div class="section-body">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Nom du test</label>
+                    <input type="text" id="input-nom" placeholder="Ex: Login valide admin">
+                </div>
+                <div class="form-group">
+                    <label>Catégorie</label>
+                    <select id="input-categorie">
+                        <option>Authentification</option>
+                        <option>CRUD</option>
+                        <option>Sécurité</option>
+                        <option>Navigation</option>
+                        <option>General</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>URL de départ</label>
+                    <input type="text" id="input-url" placeholder="http://127.0.0.1:5000/login">
+                </div>
+                <div class="form-group form-full">
+                    <label>Instruction (en langage naturel)</label>
+                    <textarea id="input-instruction" placeholder="Ex: Connecte-toi avec username=admin et password=1234, vérifie que tu arrives sur le dashboard"></textarea>
+                </div>
+            </div>
+            <br>
+            <button class="btn btn-primary" onclick="ajouterCas()">➕ Ajouter</button>
+        </div>
+    </div>
+
+    <!-- RÉSULTATS -->
+    <div class="section">
+        <div class="section-header">
+            <h2>📊 Derniers Résultats</h2>
+            <button class="btn btn-warning" onclick="chargerResultats()">🔄 Actualiser</button>
+        </div>
+        <div class="section-body" style="padding:0;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Test</th>
+                        <th>Statut</th>
+                        <th>Message</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody id="table-resultats"></tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+    const API = "http://127.0.0.1:8000";
+
+    // ======= CHARGEMENT INITIAL =======
+    async function init() {
+        await chargerStats();
+        await chargerCas();
+        await chargerResultats();
+        document.getElementById("derniere-maj").textContent =
+            "Dernière mise à jour : " + new Date().toLocaleTimeString();
+    }
+
+    // ======= STATS =======
+    async function chargerStats() {
+        const res = await fetch(`${API}/api/stats`);
+        const data = await res.json();
+        document.getElementById("stat-total").textContent = data.total_cas;
+        document.getElementById("stat-succes").textContent = data.succes;
+        document.getElementById("stat-echec").textContent = data.echecs;
+        document.getElementById("stat-taux").textContent = data.taux_succes + "%";
+    }
+
+    // ======= CAS DE TEST =======
+    async function chargerCas() {
+        const res = await fetch(`${API}/api/cas`);
+        const cas = await res.json();
+        const tbody = document.getElementById("table-cas");
+        tbody.innerHTML = "";
+        cas.forEach(c => {
+            const categorieBadge = {
+                "Authentification": "badge-auth",
+                "Sécurité": "badge-secu"
+            }[c.categorie] || "badge-general";
+
+            tbody.innerHTML += `
+                <tr>
+                    <td>${c.nom}</td>
+                    <td><span class="badge ${categorieBadge}">${c.categorie}</span></td>
+                    <td style="color:#64748b;font-size:12px;">${c.url}</td>
+                    <td style="color:#64748b;font-size:12px;">${c.date_creation}</td>
+                    <td>
+                        <button class="btn btn-success" style="font-size:11px;padding:5px 10px;" onclick="executerTest(${c.id})">▶ Lancer</button>
+                        <button class="btn btn-danger" style="font-size:11px;padding:5px 10px;margin-left:6px;" onclick="supprimerCas(${c.id})">🗑</button>
+                    </td>
+                </tr>`;
+        });
+    }
+
+    // ======= AJOUTER CAS =======
+    async function ajouterCas() {
+        const nom = document.getElementById("input-nom").value;
+        const instruction = document.getElementById("input-instruction").value;
+        const url = document.getElementById("input-url").value;
+        const categorie = document.getElementById("input-categorie").value;
+
+        if (!nom || !instruction || !url) {
+            afficherToast("⚠️ Remplis tous les champs !", "warning");
+            return;
+        }
+
+        await fetch(`${API}/api/cas`, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({nom, instruction, url, categorie})
+        });
+
+        document.getElementById("input-nom").value = "";
+        document.getElementById("input-instruction").value = "";
+        document.getElementById("input-url").value = "";
+        afficherToast("✅ Cas de test ajouté !");
+        await chargerCas();
+        await chargerStats();
+    }
+
+    // ======= SUPPRIMER CAS =======
+    async function supprimerCas(id) {
+        if (!confirm("Supprimer ce cas de test ?")) return;
+        await fetch(`${API}/api/cas/${id}`, {method: "DELETE"});
+        afficherToast("🗑️ Cas supprimé");
+        await chargerCas();
+        await chargerStats();
+    }
+
+    // ======= EXÉCUTER UN TEST =======
+    async function executerTest(id) {
+        afficherToast("🚀 Test en cours...");
+        const res = await fetch(`${API}/api/executer/${id}`, {method: "POST"});
+        const data = await res.json();
+        const emoji = data.statut === "succes" ? "✅" : "❌";
+        afficherToast(`${emoji} ${data.message}`);
+        await chargerStats();
+        await chargerResultats();
+    }
+
+    // ======= EXÉCUTER TOUS =======
+    async function executerTous() {
+        document.getElementById("loading-tous").style.display = "flex";
+        afficherToast("🚀 Lancement de tous les tests...");
+        await fetch(`${API}/api/executer-tous`, {method: "POST"});
+        document.getElementById("loading-tous").style.display = "none";
+        afficherToast("✅ Tous les tests terminés !");
+        await chargerStats();
+        await chargerResultats();
+    }
+
+    // ======= RÉSULTATS =======
+    async function chargerResultats() {
+        const res = await fetch(`${API}/api/resultats`);
+        const resultats = await res.json();
+        const tbody = document.getElementById("table-resultats");
+        tbody.innerHTML = "";
+
+        if (resultats.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:#64748b;padding:24px;">Aucun résultat encore — lance les tests !</td></tr>`;
+            return;
+        }
+
+        resultats.slice(0, 20).forEach(r => {
+            const badge = r.statut === "succes"
+                ? '<span class="badge badge-succes">✅ Succès</span>'
+                : '<span class="badge badge-echec">❌ Échec</span>';
+            tbody.innerHTML += `
+                <tr>
+                    <td>Test #${r.cas_id}</td>
+                    <td>${badge}</td>
+                    <td style="color:#94a3b8;font-size:13px;">${r.message}</td>
+                    <td style="color:#64748b;font-size:12px;">${r.date_execution}</td>
+                </tr>`;
+        });
+    }
+
+    // ======= TOAST =======
+    function afficherToast(message) {
+        const toast = document.getElementById("toast");
+        toast.textContent = message;
+        toast.style.display = "block";
+        setTimeout(() => toast.style.display = "none", 3000);
+    }
+
+    // Lancer
+    init();
+    setInterval(chargerStats, 30000);
+</script>
+</body>
+</html>

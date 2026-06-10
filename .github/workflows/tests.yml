@@ -1,0 +1,43 @@
+name: 🤖 Tests Automatiques IA
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Récupérer le code
+        uses: actions/checkout@v3
+
+      - name: 🐍 Installer Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: 📦 Installer les dépendances
+        run: |
+          pip install playwright groq python-dotenv flask flask-sqlalchemy flask-cors
+          playwright install chromium
+
+      - name: 🚀 Lancer l'app de démo
+        run: |
+          python app_demo.py &
+          sleep 3
+
+      - name: 🧪 Lancer les tests
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: |
+          python test_login.py
+
+      - name: 📊 Publier le rapport
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rapport-tests
+          path: rapport_*.html
