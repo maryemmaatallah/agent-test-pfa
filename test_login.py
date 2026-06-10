@@ -103,7 +103,7 @@ def lancer_test(nom_test, instruction, url_depart):
     resultat_final = "non terminé"
 
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
+        browser = p.chromium.launch(headless=True)
         page = browser.new_page()
         page.goto(url_depart)
         page.wait_for_timeout(1000)
