@@ -1,5 +1,5 @@
 name: 🤖 Tests Automatiques IA
-
+# Version 2
 on:
   push:
     branches: [ main ]
