@@ -5,405 +5,914 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🤖 Plateforme de Test IA</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: #0f172a;
-            color: #e2e8f0;
-            min-height: 100vh;
-        }
-
-        /* NAVBAR */
-        .navbar {
-            background: #1e293b;
-            padding: 16px 32px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid #334155;
-        }
-        .navbar h1 { font-size: 20px; color: #38bdf8; }
-        .navbar span { font-size: 13px; color: #64748b; }
-
-        /* LAYOUT */
-        .container { padding: 32px; max-width: 1200px; margin: 0 auto; }
-
-        /* STATS */
-        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
-        .stat-card {
-            background: #1e293b;
-            border-radius: 12px;
-            padding: 20px;
-            border: 1px solid #334155;
-            text-align: center;
-        }
-        .stat-card h2 { font-size: 36px; font-weight: 700; margin-bottom: 4px; }
-        .stat-card p { font-size: 13px; color: #64748b; }
-        .stat-total { color: #38bdf8; }
-        .stat-succes { color: #22c55e; }
-        .stat-echec { color: #ef4444; }
-        .stat-taux { color: #f59e0b; }
-
-        /* SECTIONS */
-        .section {
-            background: #1e293b;
-            border-radius: 12px;
-            border: 1px solid #334155;
-            margin-bottom: 24px;
-            overflow: hidden;
-        }
-        .section-header {
-            padding: 16px 24px;
-            border-bottom: 1px solid #334155;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .section-header h2 { font-size: 16px; font-weight: 600; }
-        .section-body { padding: 24px; }
-
-        /* BOUTONS */
-        .btn {
-            padding: 8px 16px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
-            transition: opacity 0.2s;
-        }
-        .btn:hover { opacity: 0.8; }
-        .btn-primary { background: #38bdf8; color: #0f172a; }
-        .btn-success { background: #22c55e; color: white; }
-        .btn-danger { background: #ef4444; color: white; }
-        .btn-warning { background: #f59e0b; color: #0f172a; }
-
-        /* TABLE */
-        table { width: 100%; border-collapse: collapse; }
-        th {
-            text-align: left;
-            padding: 10px 16px;
-            font-size: 12px;
-            color: #64748b;
-            text-transform: uppercase;
-            border-bottom: 1px solid #334155;
-        }
-        td { padding: 12px 16px; border-bottom: 1px solid #1e293b; font-size: 14px; }
-        tr:hover td { background: #0f172a; }
-
-        /* BADGES */
-        .badge {
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        .badge-succes { background: #14532d; color: #22c55e; }
-        .badge-echec { background: #450a0a; color: #ef4444; }
-        .badge-auth { background: #1e3a5f; color: #38bdf8; }
-        .badge-secu { background: #3b1f5e; color: #a78bfa; }
-        .badge-general { background: #1e293b; color: #94a3b8; }
-
-        /* FORMULAIRE */
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-        .form-group { display: flex; flex-direction: column; gap: 6px; }
-        .form-group label { font-size: 13px; color: #94a3b8; }
-        .form-group input, .form-group select, .form-group textarea {
-            background: #0f172a;
-            border: 1px solid #334155;
-            border-radius: 8px;
-            padding: 10px 12px;
-            color: #e2e8f0;
-            font-size: 14px;
-            outline: none;
-        }
-        .form-group input:focus, .form-group textarea:focus {
-            border-color: #38bdf8;
-        }
-        .form-group textarea { resize: vertical; min-height: 80px; }
-        .form-full { grid-column: 1 / -1; }
-
-        /* LOADING */
-        .loading { display: none; align-items: center; gap: 8px; color: #f59e0b; font-size: 14px; }
-        .spinner {
-            width: 16px; height: 16px;
-            border: 2px solid #334155;
-            border-top-color: #f59e0b;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* TOAST */
-        .toast {
-            position: fixed; bottom: 24px; right: 24px;
-            background: #1e293b; border: 1px solid #334155;
-            padding: 12px 20px; border-radius: 10px;
-            font-size: 14px; display: none;
-            z-index: 1000;
-        }
-    </style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', sans-serif; background: #f1f5f9; color: #1e293b; min-height: 100vh; }
+    .login-page { display: flex; align-items: center; justify-content: center; min-height: 100vh; background: #f1f5f9; }
+    .login-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 48px; width: 400px; box-shadow: 0 20px 60px rgba(0,0,0,0.1); }
+    .login-card h1 { font-size: 24px; color: #1d4ed8; margin-bottom: 8px; }
+    .login-card p { color: #64748b; margin-bottom: 32px; font-size: 14px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 13px; color: #475569; margin-bottom: 6px; }
+    .form-group input { width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; color: #1e293b; font-size: 14px; outline: none; }
+    .form-group input:focus { border-color: #1d4ed8; box-shadow: 0 0 0 3px rgba(29,78,216,0.1); }
+    .btn-login { width: 100%; background: #1d4ed8; color: white; border: none; border-radius: 8px; padding: 12px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 8px; }
+    .btn-login:hover { background: #1e40af; }
+    .login-error { color: #ef4444; font-size: 13px; margin-top: 12px; text-align: center; display: none; }
+    .welcome-page { display: none; align-items: center; justify-content: center; min-height: 100vh; flex-direction: column; gap: 32px; background: #f1f5f9; }
+    .welcome-page h1 { font-size: 32px; color: #1d4ed8; }
+    .welcome-page > p { color: #64748b; font-size: 16px; }
+    .welcome-cards { display: flex; gap: 24px; flex-wrap: wrap; justify-content: center; }
+    .welcome-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 40px; width: 260px; text-align: center; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    .welcome-card:hover { border-color: #1d4ed8; transform: translateY(-4px); box-shadow: 0 8px 24px rgba(29,78,216,0.15); }
+    .welcome-card .icon { font-size: 48px; margin-bottom: 16px; }
+    .welcome-card h2 { font-size: 18px; margin-bottom: 8px; color: #1e293b; }
+    .welcome-card p { color: #64748b; font-size: 13px; }
+    .import-page { display: none; padding: 32px; max-width: 800px; margin: 0 auto; }
+    .import-page h1 { font-size: 24px; color: #1d4ed8; margin-bottom: 8px; }
+    .import-page > p { color: #64748b; margin-bottom: 32px; }
+    .import-zone { border: 2px dashed #cbd5e1; border-radius: 12px; padding: 48px; text-align: center; cursor: pointer; transition: all 0.2s; background: #f8fafc; }
+    .import-zone:hover { border-color: #1d4ed8; background: #eff6ff; }
+    .import-zone input { display: none; }
+    .import-zone .icon { font-size: 48px; margin-bottom: 16px; }
+    .import-zone p { color: #64748b; }
+    .import-zone strong { color: #1d4ed8; }
+    .progress-bar { display: none; margin-top: 24px; }
+    .progress-bar-bg { background: #e2e8f0; border-radius: 8px; height: 8px; overflow: hidden; }
+    .progress-bar-fill { background: #1d4ed8; height: 100%; width: 0%; transition: width 0.3s; border-radius: 8px; }
+    .progress-text { font-size: 13px; color: #64748b; margin-top: 8px; text-align: center; }
+    .imported-cases { display: none; margin-top: 24px; }
+    .navbar { background: #ffffff; padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e2e8f0; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+    .navbar h1 { font-size: 20px; color: #1d4ed8; }
+    .navbar-right { display: flex; align-items: center; gap: 16px; }
+    .navbar span { font-size: 13px; color: #64748b; }
+    .btn-logout { background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; border-radius: 8px; padding: 6px 14px; cursor: pointer; font-size: 13px; }
+    .btn-logout:hover { background: #e2e8f0; }
+    .tabs { display: flex; gap: 4px; padding: 20px 32px 0; border-bottom: 1px solid #e2e8f0; background: #ffffff; }
+    .tab { padding: 10px 20px; border-radius: 8px 8px 0 0; cursor: pointer; font-size: 14px; font-weight: 600; color: #64748b; background: transparent; border: none; transition: all 0.2s; }
+    .tab:hover { color: #1d4ed8; background: #eff6ff; }
+    .tab.active { color: #1d4ed8; background: #f1f5f9; border-top: 2px solid #1d4ed8; }
+    .dashboard-page { display: none; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .container { padding: 32px; max-width: 1200px; margin: 0 auto; }
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
+    .stat-card { background: #ffffff; border-radius: 12px; padding: 20px; border: 1px solid #e2e8f0; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .stat-card h2 { font-size: 36px; font-weight: 700; margin-bottom: 4px; }
+    .stat-card p { font-size: 13px; color: #64748b; }
+    .stat-total { color: #1d4ed8; } .stat-succes { color: #16a34a; } .stat-echec { color: #dc2626; } .stat-taux { color: #d97706; }
+    .section { background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; margin-bottom: 24px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .section-header { padding: 16px 24px; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: space-between; background: #f8fafc; }
+    .section-header h2 { font-size: 16px; font-weight: 600; color: #1e293b; }
+    .section-body { padding: 24px; }
+    .btn { padding: 8px 16px; border-radius: 8px; border: none; cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.2s; }
+    .btn:hover { opacity: 0.85; transform: translateY(-1px); }
+    .btn-primary { background: #1d4ed8; color: white; }
+    .btn-success { background: #16a34a; color: white; }
+    .btn-danger { background: #dc2626; color: white; }
+    .btn-warning { background: #d97706; color: white; }
+    .btn-secondary { background: #e2e8f0; color: #475569; }
+    .btn-purple { background: #7c3aed; color: white; }
+    .btn-orange { background: #ea580c; color: white; }
+    .btn-blue { background: #0284c7; color: white; }
+    table { width: 100%; border-collapse: collapse; }
+    th { text-align: left; padding: 10px 16px; font-size: 12px; color: #64748b; text-transform: uppercase; border-bottom: 1px solid #e2e8f0; background: #f8fafc; }
+    td { padding: 12px 16px; border-bottom: 1px solid #f1f5f9; font-size: 14px; color: #1e293b; }
+    tr:hover td { background: #f8fafc; }
+    .badge { padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+    .badge-succes { background: #dcfce7; color: #16a34a; }
+    .badge-echec { background: #fee2e2; color: #dc2626; }
+    .badge-partiel { background: #fef3c7; color: #d97706; }
+    .badge-auth { background: #dbeafe; color: #1d4ed8; }
+    .badge-secu { background: #ede9fe; color: #7c3aed; }
+    .badge-general { background: #f1f5f9; color: #64748b; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group-dash { display: flex; flex-direction: column; gap: 6px; }
+    .form-group-dash label { font-size: 13px; color: #475569; }
+    .form-group-dash input, .form-group-dash select, .form-group-dash textarea { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px 12px; color: #1e293b; font-size: 14px; outline: none; }
+    .form-group-dash input:focus, .form-group-dash textarea:focus { border-color: #1d4ed8; box-shadow: 0 0 0 3px rgba(29,78,216,0.1); }
+    .form-group-dash textarea { resize: vertical; min-height: 80px; }
+    .form-full { grid-column: 1 / -1; }
+    .charts { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+    .chart-card { background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .chart-card h3 { font-size: 15px; margin-bottom: 16px; color: #475569; }
+    canvas { max-height: 200px; }
+    .loading { display: none; align-items: center; gap: 8px; color: #d97706; font-size: 14px; }
+    .spinner { width: 16px; height: 16px; border: 2px solid #e2e8f0; border-top-color: #1d4ed8; border-radius: 50%; animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .toast { position: fixed; bottom: 24px; right: 24px; background: #1e293b; color: #f1f5f9; border: 1px solid #334155; padding: 12px 20px; border-radius: 10px; font-size: 14px; display: none; z-index: 1000; box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+    .record-hero { background: linear-gradient(135deg, #ede9fe, #dbeafe); border: 1px solid #c4b5fd; border-radius: 16px; padding: 32px; text-align: center; margin-bottom: 24px; }
+    .record-hero h2 { font-size: 22px; color: #7c3aed; margin-bottom: 8px; }
+    .record-hero p { color: #64748b; margin-bottom: 24px; font-size: 14px; }
+    .record-form { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; align-items: flex-end; }
+    .record-form input { background: #ffffff; border: 1px solid #c4b5fd; border-radius: 8px; padding: 10px 14px; color: #1e293b; font-size: 14px; outline: none; width: 220px; }
+    .record-form input:focus { border-color: #7c3aed; }
+    .btn-record { background: #7c3aed; color: white; border: none; border-radius: 8px; padding: 10px 20px; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.2s; }
+    .btn-record:hover { background: #6d28d9; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.7} }
+    .steps-guide { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
+    .step-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .step-card .step-num { width: 32px; height: 32px; background: #1d4ed8; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: white; margin: 0 auto 12px; }
+    .step-card h4 { font-size: 14px; margin-bottom: 6px; color: #1e293b; }
+    .step-card p { font-size: 12px; color: #64748b; line-height: 1.5; }
+    .bookmarklet-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px; margin-top: 16px; }
+    .bookmarklet-box label { font-size: 12px; color: #64748b; display: block; margin-bottom: 8px; }
+    .bookmarklet-code { font-family: monospace; font-size: 12px; color: #1d4ed8; word-break: break-all; line-height: 1.6; }
+    .copy-btn { background: #e2e8f0; color: #475569; border: none; border-radius: 6px; padding: 4px 10px; font-size: 11px; cursor: pointer; margin-top: 8px; }
+    .session-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; transition: border-color 0.2s; }
+    .session-card:hover { border-color: #1d4ed8; box-shadow: 0 2px 8px rgba(29,78,216,0.1); }
+    .session-info h4 { font-size: 15px; margin-bottom: 4px; color: #1e293b; }
+    .session-meta { font-size: 12px; color: #64748b; display: flex; gap: 12px; }
+    .session-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .replay-log { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; font-family: monospace; font-size: 12px; max-height: 300px; overflow-y: auto; }
+    .log-ok { color: #16a34a; } .log-warn { color: #d97706; } .log-echec { color: #dc2626; } .log-skip { color: #94a3b8; }
+    .status-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+    .status-enregistrement { background: #fee2e2; color: #dc2626; }
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 500; align-items: center; justify-content: center; }
+    .modal-overlay.open { display: flex; }
+    .modal { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 32px; width: 600px; max-height: 80vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
+    .modal h3 { font-size: 18px; margin-bottom: 20px; color: #1d4ed8; }
+    .modal-close { float: right; background: none; border: none; color: #64748b; font-size: 20px; cursor: pointer; }
+    .empty-state { text-align: center; padding: 48px; color: #64748b; }
+    .empty-state .icon { font-size: 48px; margin-bottom: 16px; }
+    .param-field { margin-bottom: 16px; }
+    .param-field label { display: block; font-size: 12px; color: #475569; margin-bottom: 6px; }
+    .param-field .orig { font-size: 11px; color: #64748b; margin-bottom: 4px; }
+    .param-field input { width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px 12px; color: #1e293b; font-size: 14px; outline: none; }
+    .param-field input:focus { border-color: #1d4ed8; }
+    .param-info { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 12px 16px; margin-bottom: 20px; font-size: 13px; color: #1d4ed8; }
+    .rapport-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px 20px; margin-bottom: 10px; }
+    .rapport-card.succes { border-left: 4px solid #16a34a; }
+    .rapport-card.echec { border-left: 4px solid #dc2626; }
+    .rapport-card h5 { font-size: 14px; margin-bottom: 8px; color: #1e293b; }
+    .rapport-meta { display: flex; flex-wrap: wrap; gap: 8px; font-size: 12px; color: #64748b; }
+    .rapport-meta span { background: #e2e8f0; padding: 2px 8px; border-radius: 4px; }
+    .rapport-meta .val { color: #d97706; }
+    .rapport-meta .ok { color: #16a34a; }
+    .rapport-meta .ko { color: #dc2626; }
+    .smart-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-bottom: 24px; }
+    .smart-stat { background: #ffffff; border-radius: 12px; padding: 20px; border: 1px solid #e2e8f0; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .smart-stat h2 { font-size: 32px; font-weight: 700; margin-bottom: 4px; }
+    .recommandation { background: #fef3c7; border: 1px solid #fcd34d; border-radius: 8px; padding: 12px 16px; margin-bottom: 8px; font-size: 13px; color: #92400e; }
+    .filter-bar { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+    .filter-btn { padding: 6px 14px; border-radius: 20px; border: 1px solid #cbd5e1; background: #ffffff; color: #64748b; cursor: pointer; font-size: 12px; font-weight: 600; transition: all 0.2s; }
+    .filter-btn.active { background: #1d4ed8; color: white; border-color: #1d4ed8; }
+    .smart-session-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; transition: border-color 0.2s; }
+    .smart-session-card:hover { border-color: #1d4ed8; }
+    .screenshot-img { max-width: 100%; border-radius: 8px; margin-top: 8px; border: 1px solid #e2e8f0; }
+</style>
 </head>
 <body>
 
-<nav class="navbar">
+<!-- LOGIN -->
+<div class="login-page" id="login-page">
+    <div class="login-card">
+        <h1>🤖 Plateforme de Test IA</h1>
+        <p>Connectez-vous pour accéder à votre plateforme</p>
+        <div class="form-group"><label>Nom d'utilisateur</label><input type="text" id="login-username" placeholder="admin"></div>
+        <div class="form-group"><label>Mot de passe</label><input type="password" id="login-password" placeholder="••••••••" onkeypress="if(event.key==='Enter') seConnecter()"></div>
+        <button class="btn-login" onclick="seConnecter()">Se connecter</button>
+        <p class="login-error" id="login-error">❌ Identifiants incorrects</p>
+    </div>
+</div>
+
+<!-- WELCOME -->
+<div class="welcome-page" id="welcome-page">
     <h1>🤖 Plateforme de Test IA</h1>
-    <span id="derniere-maj">Chargement...</span>
-</nav>
+    <p>Comment voulez-vous commencer ?</p>
+    <div class="welcome-cards">
+        <div class="welcome-card" onclick="afficherImport()"><div class="icon">⚡</div><h2>Quick Import</h2><p>Importer des cas de test depuis un fichier CSV ou JSON</p></div>
+        <div class="welcome-card" onclick="afficherDashboard()"><div class="icon">✏️</div><h2>Start from Scratch</h2><p>Créer vos cas de test manuellement</p></div>
+        <div class="welcome-card" onclick="afficherDashboard('record')"><div class="icon">🔴</div><h2>Record & Replay</h2><p>Enregistrer vos actions et les rejouer automatiquement</p></div>
+    </div>
+</div>
 
-<div class="container">
+<!-- IMPORT -->
+<div class="import-page" id="import-page">
+    <button class="btn btn-secondary" onclick="afficherWelcome()" style="margin-bottom:24px;">← Retour</button>
+    <h1>📥 Quick Import</h1>
+    <p>Importez vos cas de test depuis un fichier CSV ou JSON</p>
+    <div class="import-zone" onclick="document.getElementById('file-input').click()">
+        <input type="file" id="file-input" accept=".csv,.json" onchange="importerFichier(event)">
+        <div class="icon">📂</div><p>Cliquez pour sélectionner un fichier</p><p><strong>CSV ou JSON</strong> supportés</p>
+    </div>
+    <div class="progress-bar" id="progress-bar"><div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-fill"></div></div><p class="progress-text" id="progress-text">Import en cours...</p></div>
+    <div class="imported-cases" id="imported-cases">
+        <h3 style="margin-bottom:16px;color:#22c55e;">✅ Import terminé !</h3>
+        <table><thead><tr><th>Nom</th><th>Catégorie</th><th>URL</th></tr></thead><tbody id="imported-table"></tbody></table>
+        <br><button class="btn btn-success" onclick="confirmerImport()">✅ Confirmer l'import</button>
+    </div>
+</div>
 
-    <!-- STATS -->
-    <div class="stats">
-        <div class="stat-card">
-            <h2 class="stat-total" id="stat-total">-</h2>
-            <p>Cas de test</p>
-        </div>
-        <div class="stat-card">
-            <h2 class="stat-succes" id="stat-succes">-</h2>
-            <p>Succès</p>
-        </div>
-        <div class="stat-card">
-            <h2 class="stat-echec" id="stat-echec">-</h2>
-            <p>Échecs</p>
-        </div>
-        <div class="stat-card">
-            <h2 class="stat-taux" id="stat-taux">-%</h2>
-            <p>Taux de succès</p>
-        </div>
+<!-- DASHBOARD -->
+<div class="dashboard-page" id="dashboard-page">
+    <nav class="navbar">
+        <h1>🤖 Plateforme de Test IA</h1>
+        <div class="navbar-right"><span id="user-display"></span><span id="derniere-maj"></span><button class="btn-logout" onclick="seDeconnecter()">Déconnexion</button></div>
+    </nav>
+    <div class="tabs">
+        <button class="tab active" onclick="switchTab('tab-tests', this)">🧪 Tests IA</button>
+        <button class="tab" onclick="switchTab('tab-record', this)">🔴 Record & Replay</button>
+        <button class="tab" onclick="switchTab('tab-smart', this)">🤖 Smart Test</button>
     </div>
 
-    <!-- CAS DE TEST -->
-    <div class="section">
-        <div class="section-header">
-            <h2>📋 Cas de Test</h2>
-            <div style="display:flex; gap:10px; align-items:center;">
-                <div class="loading" id="loading-tous">
-                    <div class="spinner"></div>
-                    <span>Tests en cours...</span>
-                </div>
-                <button class="btn btn-success" onclick="executerTous()">▶️ Lancer tous les tests</button>
+    <!-- TAB TESTS IA -->
+    <div id="tab-tests" class="tab-content active">
+        <div class="container">
+            <div class="stats">
+                <div class="stat-card"><h2 class="stat-total" id="stat-total">-</h2><p>Cas de test</p></div>
+                <div class="stat-card"><h2 class="stat-succes" id="stat-succes">-</h2><p>Succès</p></div>
+                <div class="stat-card"><h2 class="stat-echec" id="stat-echec">-</h2><p>Échecs</p></div>
+                <div class="stat-card"><h2 class="stat-taux" id="stat-taux">-%</h2><p>Taux de succès</p></div>
             </div>
-        </div>
-        <div class="section-body" style="padding:0;">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nom</th>
-                        <th>Catégorie</th>
-                        <th>URL</th>
-                        <th>Date création</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="table-cas"></tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- AJOUTER CAS DE TEST -->
-    <div class="section">
-        <div class="section-header">
-            <h2>➕ Ajouter un cas de test</h2>
-        </div>
-        <div class="section-body">
-            <div class="form-grid">
-                <div class="form-group">
-                    <label>Nom du test</label>
-                    <input type="text" id="input-nom" placeholder="Ex: Login valide admin">
+            <div class="charts">
+                <div class="chart-card"><h3>📊 Répartition des résultats</h3><canvas id="chart-pie"></canvas></div>
+                <div class="chart-card"><h3>📈 Historique des exécutions</h3><canvas id="chart-history"></canvas></div>
+            </div>
+            <div class="section">
+                <div class="section-header"><h2>📋 Cas de Test</h2>
+                    <div style="display:flex;gap:10px;align-items:center;">
+                        <div class="loading" id="loading-tous"><div class="spinner"></div><span>Tests en cours...</span></div>
+                        <button class="btn btn-secondary" onclick="afficherWelcome()">📥 Importer</button>
+                        <button class="btn btn-success" onclick="executerTous()">▶️ Lancer tous</button>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Catégorie</label>
-                    <select id="input-categorie">
-                        <option>Authentification</option>
-                        <option>CRUD</option>
-                        <option>Sécurité</option>
-                        <option>Navigation</option>
-                        <option>General</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>URL de départ</label>
-                    <input type="text" id="input-url" placeholder="http://127.0.0.1:5000/login">
-                </div>
-                <div class="form-group form-full">
-                    <label>Instruction (en langage naturel)</label>
-                    <textarea id="input-instruction" placeholder="Ex: Connecte-toi avec username=admin et password=1234, vérifie que tu arrives sur le dashboard"></textarea>
+                <div class="section-body" style="padding:0;">
+                    <table><thead><tr><th>Nom</th><th>Catégorie</th><th>URL</th><th>Date</th><th>Actions</th></tr></thead><tbody id="table-cas"></tbody></table>
                 </div>
             </div>
-            <br>
-            <button class="btn btn-primary" onclick="ajouterCas()">➕ Ajouter</button>
+            <div class="section">
+                <div class="section-header"><h2>➕ Ajouter un cas de test</h2></div>
+                <div class="section-body">
+                    <div class="form-grid">
+                        <div class="form-group-dash"><label>Nom du test</label><input type="text" id="input-nom" placeholder="Ex: Login valide admin"></div>
+                        <div class="form-group-dash"><label>Catégorie</label><select id="input-categorie"><option>Authentification</option><option>CRUD</option><option>Sécurité</option><option>Navigation</option><option>General</option></select></div>
+                        <div class="form-group-dash"><label>URL de départ</label><input type="text" id="input-url" placeholder="http://127.0.0.1:5000/login"></div>
+                        <div class="form-group-dash form-full"><label>Instruction</label><textarea id="input-instruction" placeholder="Ex: Connecte-toi avec username=admin..."></textarea></div>
+                    </div>
+                    <br><button class="btn btn-primary" onclick="ajouterCas()">➕ Ajouter</button>
+                </div>
+            </div>
+            <div class="section">
+                <div class="section-header"><h2>📊 Derniers Résultats</h2><button class="btn btn-warning" onclick="chargerResultats()">🔄 Actualiser</button></div>
+                <div class="section-body" style="padding:0;">
+                    <table><thead><tr><th>Test</th><th>Statut</th><th>Message</th><th>Date</th></tr></thead><tbody id="table-resultats"></tbody></table>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- RÉSULTATS -->
-    <div class="section">
-        <div class="section-header">
-            <h2>📊 Derniers Résultats</h2>
-            <button class="btn btn-warning" onclick="chargerResultats()">🔄 Actualiser</button>
-        </div>
-        <div class="section-body" style="padding:0;">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Test</th>
-                        <th>Statut</th>
-                        <th>Message</th>
-                        <th>Date</th>
-                    </tr>
-                </thead>
-                <tbody id="table-resultats"></tbody>
-            </table>
+    <!-- TAB RECORD & REPLAY -->
+    <div id="tab-record" class="tab-content">
+        <div class="container">
+            <div class="steps-guide">
+                <div class="step-card"><div class="step-num">1</div><h4>Enregistrez vos actions</h4><p>Donnez un nom et l'URL, un navigateur s'ouvre : faites vos actions puis fermez-le</p></div>
+                <div class="step-card"><div class="step-num">2</div><h4>Rejouez normalement</h4><p>▶️ Rejouer répète exactement ce que vous avez fait</p></div>
+                <div class="step-card"><div class="step-num">3</div><h4>Rejouer avec nouveaux paramètres</h4><p>🔁 Rejouer avec paramètres permet de tester avec des données différentes</p></div>
+            </div>
+            <div class="record-hero">
+                <h2>🔴 Nouvel enregistrement</h2>
+                <p>Enregistrez vos actions manuelles, puis rejouez-les avec les mêmes données ou des données différentes</p>
+                <div class="record-form">
+    <div style="display:flex;flex-direction:column;gap:4px;text-align:left;">
+        <label style="font-size:12px;color:#64748b;">Nom de l'application</label>
+        <input type="text" id="rec-app" placeholder="Ex: SmartRestaurant Admin" list="apps-existantes">
+        <datalist id="apps-existantes"></datalist>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:4px;text-align:left;">
+        <label style="font-size:12px;color:#64748b;">Nom de la session</label>
+        <input type="text" id="rec-nom" placeholder="Ex: Test ajout ingrédient">
+    </div>
+    <div style="display:flex;flex-direction:column;gap:4px;text-align:left;">
+        <label style="font-size:12px;color:#64748b;">URL de l'application</label>
+        <input type="text" id="rec-url" placeholder="http://127.0.0.1:3000/admin">
+    </div>
+    <button class="btn-record" onclick="demarrerEnregistrement()">🔴 Démarrer</button>
+</div>
+                <div class="bookmarklet-box" id="snippet-box" style="display:none;">
+                    <label>📋 Copiez ce code dans la console F12 de votre application :</label>
+                    <div class="bookmarklet-code" id="snippet-code"></div>
+                    <button class="copy-btn" onclick="copierSnippet()">📋 Copier</button>
+                    <span style="font-size:11px;color:#64748b;margin-left:8px;">Faites vos actions → cliquez ✓ Vérifier pour assertions → cliquez STOP</span>
+                </div>
+                <div id="rec-statut" style="margin-top:16px;display:none;">
+                    <span class="status-badge status-enregistrement">
+                        <span style="width:8px;height:8px;background:#ef4444;border-radius:50%;display:inline-block;animation:pulse 1s infinite"></span>
+                        Enregistrement en cours — <span id="rec-nb-actions">0</span> actions capturées
+                    </span>
+                </div>
+            </div>
+            <div class="section">
+                <div class="section-header"><h2>📼 Sessions enregistrées</h2><button class="btn btn-secondary" onclick="chargerSessions()">🔄 Actualiser</button></div>
+                <div class="section-body" id="sessions-body">
+                    <div class="empty-state"><div class="icon">📼</div><p>Aucune session enregistrée</p></div>
+                </div>
+            </div>
         </div>
     </div>
 
+    <!-- TAB SMART TEST -->
+    <div id="tab-smart" class="tab-content">
+        <div class="container">
+            <div style="background:linear-gradient(135deg,#0c1445,#1e293b);border:1px solid #1d4ed8;border-radius:16px;padding:32px;margin-bottom:24px;text-align:center;">
+                <h2 style="font-size:22px;color:#60a5fa;margin-bottom:8px;">🤖 Smart Test Automatique</h2>
+                <p style="color:#64748b;font-size:14px;margin-bottom:0;">Génère automatiquement des tests valides et invalides pour chaque champ de vos formulaires.<br>Détecte les validations manquantes et produit un rapport détaillé.</p>
+            </div>
+            <div class="section">
+                <div class="section-header">
+                    <h2>📼 Choisir une session à tester</h2>
+                    <button class="btn btn-secondary" onclick="chargerSessionsSmart()">🔄 Actualiser</button>
+                </div>
+                <div class="section-body" id="smart-sessions-body">
+                    <div class="empty-state"><div class="icon">📼</div><p>Chargement...</p></div>
+                </div>
+            </div>
+            <div class="section">
+    <div class="section-header">
+        <h2>📚 Historique des Smart Tests</h2>
+        <button class="btn btn-secondary" onclick="chargerHistoriqueSmart()">🔄 Actualiser</button>
+    </div>
+    <div class="section-body" id="smart-historique-body">
+        <div class="empty-state"><div class="icon">📚</div><p>Chargement...</p></div>
+    </div>
+</div>
+            <div id="smart-loading" style="display:none;text-align:center;padding:48px;">
+                <div style="font-size:48px;margin-bottom:16px;">🤖</div>
+                <div style="font-size:18px;color:#60a5fa;margin-bottom:8px;">Smart Test en cours...</div>
+                <div style="color:#64748b;font-size:14px;" id="smart-loading-msg">Génération des données de test...</div>
+                <div style="margin-top:24px;background:#1e293b;border-radius:8px;height:6px;overflow:hidden;">
+                    <div id="smart-progress" style="background:#3b82f6;height:100%;width:0%;transition:width 0.5s;border-radius:8px;"></div>
+                </div>
+            </div>
+            <div id="smart-rapport" style="display:none;">
+                <div class="smart-stats">
+                    <div class="smart-stat"><h2 id="sr-total" style="color:#38bdf8;">-</h2><p style="color:#64748b;font-size:13px;">Tests exécutés</p></div>
+                    <div class="smart-stat"><h2 id="sr-succes" style="color:#22c55e;">-</h2><p style="color:#64748b;font-size:13px;">Succès</p></div>
+                    <div class="smart-stat"><h2 id="sr-echecs" style="color:#ef4444;">-</h2><p style="color:#64748b;font-size:13px;">Échecs</p></div>
+                    <div class="smart-stat"><h2 id="sr-taux" style="color:#f59e0b;">-%</h2><p style="color:#64748b;font-size:13px;">Taux de réussite</p></div>
+                </div>
+
+                <div style="margin-bottom:16px;text-align:right;">
+                    <button id="btn-export-rapport" class="btn-secondary" onclick="exporterRapportHTML()">📄 Exporter le rapport</button>
+                </div>
+                <div id="smart-recommandations" style="margin-bottom:24px;display:none;">
+                    <div class="section">
+                        <div class="section-header"><h2>⚠️ Validations manquantes détectées</h2></div>
+                        <div class="section-body" id="smart-recommandations-body"></div>
+                    </div>
+                </div>
+                <div class="filter-bar">
+                    <button class="filter-btn active" onclick="filtrerRapport('tous', this)">Tous</button>
+                    <button class="filter-btn" onclick="filtrerRapport('valide', this)">✅ Tests valides</button>
+                    <button class="filter-btn" onclick="filtrerRapport('invalide', this)">❌ Tests invalides</button>
+                    <button class="filter-btn" onclick="filtrerRapport('echec', this)">🔴 Échoués seulement</button>
+                </div>
+                <div id="smart-resultats-body"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL Résultat Replay -->
+<div class="modal-overlay" id="modal-replay">
+    <div class="modal">
+        <button class="modal-close" onclick="fermerModal('modal-replay')">✕</button>
+        <h3>▶️ Résultat du Replay</h3>
+        <div id="modal-replay-content"></div>
+    </div>
+</div>
+
+<!-- MODAL Paramètres -->
+<div class="modal-overlay" id="modal-params">
+    <div class="modal">
+        <button class="modal-close" onclick="fermerModal('modal-params')">✕</button>
+        <h3>🔁 Rejouer avec nouveaux paramètres</h3>
+        <div class="param-info">Les champs ci-dessous ont été remplis lors de l'enregistrement. Modifiez les valeurs pour tester avec des données différentes. Les mots de passe ne sont pas modifiables ici.</div>
+        <div id="params-fields"></div>
+        <div style="display:flex;gap:12px;margin-top:24px;">
+            <button class="btn btn-purple" style="flex:1;" onclick="lancerReplayAvecParams()">▶️ Lancer le replay</button>
+            <button class="btn btn-secondary" onclick="fermerModal('modal-params')">Annuler</button>
+        </div>
+    </div>
 </div>
 
 <div class="toast" id="toast"></div>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <script>
-    const API = "http://127.0.0.1:8000";
+const API = "http://127.0.0.1:8000";
+let currentUser = null;
+let pieChart = null, historyChart = null;
+let casImportes = [];
+let recStatutInterval = null;
+let sessionEnCours = null;
+let rapportComplet = [];
 
-    // ======= CHARGEMENT INITIAL =======
-    async function init() {
-        await chargerStats();
-        await chargerCas();
-        await chargerResultats();
-        document.getElementById("derniere-maj").textContent =
-            "Dernière mise à jour : " + new Date().toLocaleTimeString();
+// ═══════ LOGIN ═══════
+async function seConnecter() {
+    const username = document.getElementById("login-username").value;
+    const password = document.getElementById("login-password").value;
+    const res = await fetch(`${API}/api/platform/login`, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({username, password}) });
+    const data = await res.json();
+    if (data.success) { currentUser = data.username; localStorage.setItem("platform_user", username); afficherWelcome(); }
+    else document.getElementById("login-error").style.display = "block";
+}
+function seDeconnecter() { currentUser = null; localStorage.removeItem("platform_user"); afficherPage("login-page"); }
+
+// ═══════ NAVIGATION ═══════
+function afficherPage(pageId) {
+    ["login-page","welcome-page","import-page","dashboard-page"].forEach(id => document.getElementById(id).style.display = "none");
+    const t = document.getElementById(pageId);
+    t.style.display = (pageId==="login-page"||pageId==="welcome-page") ? "flex" : "block";
+}
+function afficherWelcome() { afficherPage("welcome-page"); }
+function afficherImport() { afficherPage("import-page"); }
+async function afficherDashboard(tab) {
+    afficherPage("dashboard-page");
+    document.getElementById("user-display").textContent = "👤 " + currentUser;
+    await init();
+    if (tab === 'record') { switchTab('tab-record', document.querySelectorAll('.tab')[1]); await chargerSessions(); }
+}
+function switchTab(tabId, btn) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    btn.classList.add('active');
+    if (tabId === 'tab-record') chargerSessions();
+    if (tabId === 'tab-smart') {
+        chargerSessionsSmart();
+        chargerHistoriqueSmart();
     }
+}
 
-    // ======= STATS =======
-    async function chargerStats() {
-        const res = await fetch(`${API}/api/stats`);
-        const data = await res.json();
-        document.getElementById("stat-total").textContent = data.total_cas;
-        document.getElementById("stat-succes").textContent = data.succes;
-        document.getElementById("stat-echec").textContent = data.echecs;
-        document.getElementById("stat-taux").textContent = data.taux_succes + "%";
-    }
+// ═══════ IMPORT ═══════
+async function importerFichier(event) {
+    const file = event.target.files[0]; if (!file) return;
+    document.getElementById("progress-bar").style.display = "block";
+    let progress = 0;
+    const interval = setInterval(() => { progress += 10; document.getElementById("progress-fill").style.width = progress+"%"; if(progress>=100) clearInterval(interval); }, 100);
+    const text = await file.text();
+    try {
+        if (file.name.endsWith(".json")) casImportes = JSON.parse(text);
+        else casImportes = text.trim().split("\n").slice(1).map(l => { const v=l.split(","); return {nom:v[0]?.trim(),instruction:v[1]?.trim(),url:v[2]?.trim(),categorie:v[3]?.trim()||"General"}; });
+        setTimeout(() => {
+            document.getElementById("imported-table").innerHTML = casImportes.map(c=>'<tr><td>'+c.nom+'</td><td><span class="badge badge-auth">'+c.categorie+'</span></td><td style="color:#64748b;font-size:12px;">'+c.url+'</td></tr>').join('');
+            document.getElementById("imported-cases").style.display = "block";
+        }, 1200);
+    } catch(e) { afficherToast("❌ Erreur de lecture"); }
+}
+async function confirmerImport() {
+    for (const cas of casImportes) await fetch(`${API}/api/cas`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(cas)});
+    afficherToast(`✅ ${casImportes.length} cas importés !`); afficherDashboard();
+}
 
-    // ======= CAS DE TEST =======
-    async function chargerCas() {
-        const res = await fetch(`${API}/api/cas`);
-        const cas = await res.json();
-        const tbody = document.getElementById("table-cas");
-        tbody.innerHTML = "";
-        cas.forEach(c => {
-            const categorieBadge = {
-                "Authentification": "badge-auth",
-                "Sécurité": "badge-secu"
-            }[c.categorie] || "badge-general";
+// ═══════ DASHBOARD ═══════
+async function init() {
+    await chargerStats(); await chargerCas(); await chargerResultats(); await chargerGraphiques();
+    document.getElementById("derniere-maj").textContent = "Mise à jour : " + new Date().toLocaleTimeString();
+}
+async function chargerStats() {
+    const data = await fetch(`${API}/api/stats`).then(r=>r.json());
+    document.getElementById("stat-total").textContent = data.total_cas;
+    document.getElementById("stat-succes").textContent = data.succes;
+    document.getElementById("stat-echec").textContent = data.echecs;
+    document.getElementById("stat-taux").textContent = data.taux_succes+"%";
+}
+async function chargerGraphiques() {
+    const data = await fetch(`${API}/api/stats`).then(r=>r.json());
+    if (pieChart) pieChart.destroy();
+    pieChart = new Chart(document.getElementById("chart-pie").getContext("2d"), { type:"doughnut", data:{labels:["Succès","Échecs"],datasets:[{data:[data.succes,data.echecs],backgroundColor:["#22c55e","#ef4444"],borderWidth:0}]}, options:{plugins:{legend:{labels:{color:"#e2e8f0"}}}} });
+    const resultats = await fetch(`${API}/api/resultats`).then(r=>r.json());
+    const derniers = resultats.slice(0,10).reverse();
+    if (historyChart) historyChart.destroy();
+    historyChart = new Chart(document.getElementById("chart-history").getContext("2d"), { type:"bar", data:{labels:derniers.map((_,i)=>'#'+(i+1)),datasets:[{data:derniers.map(r=>r.statut==="succes"?1:0),backgroundColor:derniers.map(r=>r.statut==="succes"?"#22c55e":"#ef4444"),borderWidth:0}]}, options:{plugins:{legend:{display:false}},scales:{y:{ticks:{color:"#64748b"},grid:{color:"#1e293b"}},x:{ticks:{color:"#64748b"},grid:{color:"#1e293b"}}}} });
+}
+async function chargerCas() {
+    const cas = await fetch(`${API}/api/cas`).then(r=>r.json());
+    document.getElementById("table-cas").innerHTML = cas.map(c => {
+        const badge = {"Authentification":"badge-auth","Sécurité":"badge-secu"}[c.categorie]||"badge-general";
+        return '<tr><td>'+c.nom+'</td><td><span class="badge '+badge+'">'+c.categorie+'</span></td><td style="color:#64748b;font-size:12px;">'+c.url+'</td><td style="color:#64748b;font-size:12px;">'+c.date_creation+'</td><td><button class="btn btn-success" style="font-size:11px;padding:5px 10px;" onclick="executerTest('+c.id+')">▶ Lancer</button><button class="btn btn-danger" style="font-size:11px;padding:5px 10px;margin-left:6px;" onclick="supprimerCas('+c.id+')">🗑</button></td></tr>';
+    }).join('');
+}
+async function ajouterCas() {
+    const nom=document.getElementById("input-nom").value, instruction=document.getElementById("input-instruction").value, url=document.getElementById("input-url").value, categorie=document.getElementById("input-categorie").value;
+    if(!nom||!instruction||!url){afficherToast("⚠️ Remplis tous les champs !"); return;}
+    await fetch(`${API}/api/cas`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({nom,instruction,url,categorie})});
+    document.getElementById("input-nom").value=""; document.getElementById("input-instruction").value=""; document.getElementById("input-url").value="";
+    afficherToast("✅ Cas ajouté !"); await chargerCas(); await chargerStats();
+}
+async function supprimerCas(id) { if(!confirm("Supprimer ?")) return; await fetch(`${API}/api/cas/${id}`,{method:"DELETE"}); afficherToast("🗑️ Supprimé"); await chargerCas(); await chargerStats(); }
+async function executerTest(id) { afficherToast("🚀 Test en cours..."); const data=await fetch(`${API}/api/executer/${id}`,{method:"POST"}).then(r=>r.json()); afficherToast(data.statut==="succes"?"✅ Succès !":"❌ Échec !"); await chargerStats(); await chargerGraphiques(); await chargerResultats(); }
+async function executerTous() { document.getElementById("loading-tous").style.display="flex"; await fetch(`${API}/api/executer-tous`,{method:"POST"}); document.getElementById("loading-tous").style.display="none"; afficherToast("✅ Tous les tests terminés !"); await chargerStats(); await chargerGraphiques(); await chargerResultats(); }
+async function chargerResultats() {
+    const resultats = await fetch(`${API}/api/resultats`).then(r=>r.json());
+    const tbody = document.getElementById("table-resultats");
+    if(!resultats.length){tbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:#64748b;padding:24px;">Aucun résultat</td></tr>';return;}
+    tbody.innerHTML = resultats.slice(0,20).map(r=>'<tr><td>Test #'+r.cas_id+'</td><td>'+(r.statut==="succes"?'<span class="badge badge-succes">✅ Succès</span>':'<span class="badge badge-echec">❌ Échec</span>')+'</td><td style="color:#94a3b8;font-size:13px;">'+r.message+'</td><td style="color:#64748b;font-size:12px;">'+r.date_execution+'</td></tr>').join('');
+}
 
-            tbody.innerHTML += `
-                <tr>
-                    <td>${c.nom}</td>
-                    <td><span class="badge ${categorieBadge}">${c.categorie}</span></td>
-                    <td style="color:#64748b;font-size:12px;">${c.url}</td>
-                    <td style="color:#64748b;font-size:12px;">${c.date_creation}</td>
-                    <td>
-                        <button class="btn btn-success" style="font-size:11px;padding:5px 10px;" onclick="executerTest(${c.id})">▶ Lancer</button>
-                        <button class="btn btn-danger" style="font-size:11px;padding:5px 10px;margin-left:6px;" onclick="supprimerCas(${c.id})">🗑</button>
-                    </td>
-                </tr>`;
-        });
-    }
+// ═══════ RECORD ═══════
+async function demarrerEnregistrement() {
+    const app = document.getElementById("rec-app").value.trim();
+    const nom = document.getElementById("rec-nom").value.trim();
+    const url = document.getElementById("rec-url").value.trim();
+    if (!app || !nom || !url) { afficherToast("⚠️ Remplis l'application, le nom et l'URL !"); return; }
 
-    // ======= AJOUTER CAS =======
-    async function ajouterCas() {
-        const nom = document.getElementById("input-nom").value;
-        const instruction = document.getElementById("input-instruction").value;
-        const url = document.getElementById("input-url").value;
-        const categorie = document.getElementById("input-categorie").value;
+    afficherToast("🔴 Ouverture du navigateur, faites vos actions puis fermez-le...");
+    document.getElementById("rec-statut").style.display = "block";
+    document.getElementById("rec-nb-actions").textContent = "0";
 
-        if (!nom || !instruction || !url) {
-            afficherToast("⚠️ Remplis tous les champs !", "warning");
-            return;
-        }
-
-        await fetch(`${API}/api/cas`, {
+    try {
+        const res = await fetch(`${API}/api/sessions/enregistrer`, {
             method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({nom, instruction, url, categorie})
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ nom, url, nom_application: app })
         });
-
-        document.getElementById("input-nom").value = "";
-        document.getElementById("input-instruction").value = "";
-        document.getElementById("input-url").value = "";
-        afficherToast("✅ Cas de test ajouté !");
-        await chargerCas();
-        await chargerStats();
-    }
-
-    // ======= SUPPRIMER CAS =======
-    async function supprimerCas(id) {
-        if (!confirm("Supprimer ce cas de test ?")) return;
-        await fetch(`${API}/api/cas/${id}`, {method: "DELETE"});
-        afficherToast("🗑️ Cas supprimé");
-        await chargerCas();
-        await chargerStats();
-    }
-
-    // ======= EXÉCUTER UN TEST =======
-    async function executerTest(id) {
-        afficherToast("🚀 Test en cours...");
-        const res = await fetch(`${API}/api/executer/${id}`, {method: "POST"});
-        const data = await res.json();
-        const emoji = data.statut === "succes" ? "✅" : "❌";
-        afficherToast(`${emoji} ${data.message}`);
-        await chargerStats();
-        await chargerResultats();
-    }
-
-    // ======= EXÉCUTER TOUS =======
-    async function executerTous() {
-        document.getElementById("loading-tous").style.display = "flex";
-        afficherToast("🚀 Lancement de tous les tests...");
-        await fetch(`${API}/api/executer-tous`, {method: "POST"});
-        document.getElementById("loading-tous").style.display = "none";
-        afficherToast("✅ Tous les tests terminés !");
-        await chargerStats();
-        await chargerResultats();
-    }
-
-    // ======= RÉSULTATS =======
-    async function chargerResultats() {
-        const res = await fetch(`${API}/api/resultats`);
-        const resultats = await res.json();
-        const tbody = document.getElementById("table-resultats");
-        tbody.innerHTML = "";
-
-        if (resultats.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:#64748b;padding:24px;">Aucun résultat encore — lance les tests !</td></tr>`;
+        if (!res.ok) {
+            const err = await res.json();
+            afficherToast("❌ " + (err.error || "Erreur au démarrage"));
+            document.getElementById("rec-statut").style.display = "none";
             return;
         }
-
-        resultats.slice(0, 20).forEach(r => {
-            const badge = r.statut === "succes"
-                ? '<span class="badge badge-succes">✅ Succès</span>'
-                : '<span class="badge badge-echec">❌ Échec</span>';
-            tbody.innerHTML += `
-                <tr>
-                    <td>Test #${r.cas_id}</td>
-                    <td>${badge}</td>
-                    <td style="color:#94a3b8;font-size:13px;">${r.message}</td>
-                    <td style="color:#64748b;font-size:12px;">${r.date_execution}</td>
-                </tr>`;
-        });
+    } catch (e) {
+        afficherToast("❌ Backend non accessible");
+        document.getElementById("rec-statut").style.display = "none";
+        return;
     }
 
-    // ======= TOAST =======
-    function afficherToast(message) {
-        const toast = document.getElementById("toast");
-        toast.textContent = message;
-        toast.style.display = "block";
-        setTimeout(() => toast.style.display = "none", 3000);
+    if (recStatutInterval) clearInterval(recStatutInterval);
+    recStatutInterval = setInterval(async () => {
+        try {
+            const data = await fetch(`${API}/api/sessions/statut`).then(r => r.json());
+            document.getElementById("rec-nb-actions").textContent = data.nb_actions_capturees;
+            if (!data.actif && data.nb_actions_capturees > 0) {
+                clearInterval(recStatutInterval);
+                document.getElementById("rec-statut").style.display = "none";
+                afficherToast("✅ Session enregistrée !");
+                await chargerSessions();
+            }
+        } catch (e) {}
+    }, 2000);
+}
+function copierSnippet() { navigator.clipboard.writeText(document.getElementById("snippet-code").textContent).then(()=>afficherToast("📋 Copié !")); }
+
+async function chargerSessions() {
+    const sessions = await fetch(`${API}/api/sessions`).then(r => r.json());
+    const body = document.getElementById("sessions-body");
+
+    if (!sessions.length) {
+        body.innerHTML = '<div class="empty-state"><div class="icon">📼</div><p>Aucune session enregistrée</p></div>';
+        return;
     }
 
-    // Lancer
-    init();
-    setInterval(chargerStats, 30000);
+    // Mettre à jour la liste d'autocomplétion des applications connues
+    const apps = [...new Set(sessions.map(s => s.nom_application || "Sans nom"))];
+    document.getElementById("apps-existantes").innerHTML = apps.map(a => `<option value="${a}">`).join("");
+
+    // Grouper les sessions par nom_application
+    const groupes = {};
+    sessions.forEach(s => {
+        const app = s.nom_application || "Sans nom";
+        if (!groupes[app]) groupes[app] = [];
+        groupes[app].push(s);
+    });
+
+    body.innerHTML = Object.entries(groupes).map(([appName, sessionsApp]) => `
+        <div style="margin-bottom:24px;">
+            <h3 style="font-size:15px;color:#7c3aed;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #334155;">
+                📦 ${appName} <span style="color:#64748b;font-size:12px;">(${sessionsApp.length} session${sessionsApp.length > 1 ? "s" : ""})</span>
+            </h3>
+            ${sessionsApp.map(s => `
+                <div class="session-card">
+                    <div class="session-info">
+                        <h4>📼 ${s.nom}</h4>
+                        <div class="session-meta"><span>🌐 ${s.url_depart}</span><span>⚡ ${s.nb_actions} actions</span><span>📅 ${s.date_creation}</span></div>
+                    </div>
+                    <div class="session-actions">
+                        <button class="btn btn-purple" onclick="replaySession(${s.id},'${s.nom}')">▶️ Rejouer</button>
+                        <button class="btn btn-orange" onclick="ouvrirModalParams(${s.id},'${s.nom}')">🔁 Nouveaux paramètres</button>
+                        <button class="btn btn-secondary" onclick="voirActions(${s.id})">👁 Voir</button>
+                        <button class="btn btn-danger" onclick="supprimerSession(${s.id})">🗑</button>
+                    </div>
+                </div>
+            `).join("")}
+        </div>
+    `).join("");
+}
+
+async function replaySession(id, nom) {
+    afficherToast('▶️ Replay de "'+nom+'" en cours...');
+    try {
+        const data = await fetch(`${API}/api/sessions/${id}/replay`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({headless:false,vitesse:1.0})}).then(r=>r.json());
+        afficherResultatReplay(data, nom);
+    } catch(e) { afficherToast("❌ Erreur lors du replay"); }
+}
+
+async function ouvrirModalParams(id, nom) {
+    sessionEnCours = { id, nom };
+    const parametres = await fetch(`${API}/api/sessions/${id}/parametres`).then(r=>r.json());
+    const container = document.getElementById("params-fields");
+    if(!parametres.length) { afficherToast("⚠️ Aucun champ modifiable dans cette session"); return; }
+    container.innerHTML = parametres.map(p=>
+        '<div class="param-field"><label>'+p.label+'</label><div class="orig">Valeur originale : <strong style="color:#38bdf8;">'+p.valeur_originale+'</strong></div>'+
+        '<input type="text" data-selector="'+p.selector+'" placeholder="Nouvelle valeur (laisser vide = garder l\'originale)" value=""></div>'
+    ).join('');
+    document.getElementById("modal-params").classList.add("open");
+}
+
+async function lancerReplayAvecParams() {
+    if(!sessionEnCours) return;
+    const inputs = document.querySelectorAll("#params-fields input");
+    const parametres = {};
+    inputs.forEach(inp => { if(inp.value.trim()) parametres[inp.dataset.selector] = inp.value.trim(); });
+    fermerModal("modal-params");
+    afficherToast('▶️ Replay avec nouveaux paramètres en cours...');
+    try {
+        const data = await fetch(`${API}/api/sessions/${sessionEnCours.id}/replay`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({headless:false,vitesse:1.0,parametres})}).then(r=>r.json());
+        afficherResultatReplay(data, sessionEnCours.nom+" (nouveaux paramètres)");
+    } catch(e) { afficherToast("❌ Erreur lors du replay"); }
+}
+
+function afficherResultatReplay(data, nom) {
+    const couleur = data.statut==="succes"?"#22c55e":data.statut==="partiel"?"#f59e0b":"#ef4444";
+    const emoji = data.statut==="succes"?"✅":data.statut==="partiel"?"⚠️":"❌";
+    const logHtml = (data.log||[]).map(l=>'<div class="log-'+(l.statut==='ok'?'ok':l.statut==='warn'?'warn':l.statut==='echec'?'echec':'skip')+'">'+l.message+'</div>').join('');
+    document.getElementById("modal-replay-content").innerHTML =
+        '<div style="text-align:center;margin-bottom:24px;"><div style="font-size:48px;">'+emoji+'</div>'+
+        '<div style="font-size:20px;font-weight:700;color:'+couleur+';margin-top:8px;">'+nom+'</div>'+
+        '<div style="color:#64748b;margin-top:4px;">'+data.nb_succes+' succès · '+data.nb_echecs+' échecs · '+data.taux_succes+'% réussite</div></div>'+
+        '<div class="replay-log">'+(logHtml||'<div class="log-skip">Aucun log</div>')+'</div>'+
+        (data.page_finale?'<div style="margin-top:16px;"><label style="font-size:12px;color:#64748b;">Page finale :</label><div style="font-size:12px;color:#94a3b8;margin-top:6px;font-family:monospace;">'+data.page_finale.slice(0,200)+'...</div></div>':'');
+    document.getElementById("modal-replay").classList.add("open");
+}
+
+async function voirActions(id) {
+    const session = await fetch(`${API}/api/sessions/${id}`).then(r=>r.json());
+    const actionsHtml = session.actions.map((a, i) => {
+        let desc = '';
+        if (a.type === "GOTO")        desc = '🌐 ' + a.url;
+        else if (a.type === "FILL")   desc = '✏️ ' + a.selector + ' = ' + (a.displayValue || a.value);
+        else if (a.type === "ASSERT") desc = '✅ ASSERT "' + a.text + '"';
+        else                          desc = '🖱️ ' + a.selector;
+        return '<div style="padding:8px 0;border-bottom:1px solid #334155;font-size:13px;"><span style="color:#64748b;margin-right:12px;">'+(i+1)+'.</span>'+desc+'</div>';
+    }).join('');
+    document.getElementById("modal-replay-content").innerHTML =
+        '<h4 style="margin-bottom:16px;color:#94a3b8;">📼 '+session.nom+' — '+session.nb_actions+' actions</h4>'+
+        '<div style="max-height:400px;overflow-y:auto;">'+actionsHtml+'</div>';
+    document.getElementById("modal-replay").classList.add("open");
+}
+
+async function supprimerSession(id) { if(!confirm("Supprimer ?")) return; await fetch(`${API}/api/sessions/${id}`,{method:"DELETE"}); afficherToast("🗑️ Supprimée"); await chargerSessions(); }
+
+// ═══════ SMART TEST ═══════
+async function chargerSessionsSmart() {
+    const sessions = await fetch(`${API}/api/sessions`).then(r => r.json());
+    const body = document.getElementById("smart-sessions-body");
+
+    if (!sessions.length) {
+        body.innerHTML = '<div class="empty-state"><div class="icon">📼</div><p>Aucune session — créez d\'abord un enregistrement dans l\'onglet Record & Replay</p></div>';
+        return;
+    }
+
+    // Grouper les sessions par nom_application
+    const groupes = {};
+    sessions.forEach(s => {
+        const app = s.nom_application || "Sans nom";
+        if (!groupes[app]) groupes[app] = [];
+        groupes[app].push(s);
+    });
+
+    body.innerHTML = Object.entries(groupes).map(([appName, sessionsApp]) => `
+        <div style="margin-bottom:24px;">
+            <h3 style="font-size:15px;color:#1d4ed8;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #334155;">
+                📦 ${appName} <span style="color:#64748b;font-size:12px;">(${sessionsApp.length} session${sessionsApp.length > 1 ? "s" : ""})</span>
+            </h3>
+            ${sessionsApp.map(s => `
+                <div class="smart-session-card">
+                    <div>
+                        <h4 style="font-size:15px;margin-bottom:4px;">📼 ${s.nom}</h4>
+                        <div style="font-size:12px;color:#64748b;display:flex;gap:12px;">
+                            <span>🌐 ${s.url_depart}</span><span>⚡ ${s.nb_actions} actions</span><span>📅 ${s.date_creation}</span>
+                        </div>
+                    </div>
+                    <div style="display:flex;gap:8px;">
+                        <button class="btn btn-blue" onclick="lancerSmartTest(${s.id},'${s.nom}')">🤖 Lancer Smart Test</button>
+                        <button class="btn btn-danger" onclick="supprimerSessionSmart(${s.id})">🗑️</button>
+                    </div>
+                </div>
+            `).join("")}
+        </div>
+    `).join("");
+}
+
+async function supprimerSessionSmart(id) {
+    if(!confirm("Supprimer cette session ?")) return;
+    await fetch(`${API}/api/sessions/${id}`, {method:"DELETE"});
+    afficherToast("🗑️ Session supprimée");
+    await chargerSessionsSmart();
+}
+async function lancerSmartTest(id, nom) {
+    document.getElementById("smart-rapport").style.display = "none";
+    document.getElementById("smart-loading").style.display = "block";
+    document.getElementById("smart-loading-msg").textContent = "Démarrage des tests...";
+
+    let progress = 0;
+    const interval = setInterval(() => {
+        progress = Math.min(progress + 1, 90);
+        document.getElementById("smart-progress").style.width = progress + "%";
+    }, 2000);
+
+    await fetch(`${API}/api/smart-test/${id}`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({})
+    });
+
+    const msgs = ["Tests en cours...", "Génération des cas invalides...", "Exécution Playwright...", "Analyse des résultats..."];
+    let msgIdx = 0;
+    const pollInterval = setInterval(async () => {
+        try {
+            msgIdx++;
+            document.getElementById("smart-loading-msg").textContent = msgs[msgIdx % msgs.length];
+            const res = await fetch(`${API}/api/smart-test/${id}/statut`);
+            const data = await res.json();
+            if (data.statut === "termine") {
+                clearInterval(interval);
+                clearInterval(pollInterval);
+                document.getElementById("smart-progress").style.width = "100%";
+                setTimeout(() => {
+                    document.getElementById("smart-loading").style.display = "none";
+                    afficherRapportSmart(data, nom);
+                }, 500);
+            } else if (data.statut === "erreur") {
+                clearInterval(interval);
+                clearInterval(pollInterval);
+                document.getElementById("smart-loading").style.display = "none";
+                afficherToast("❌ Erreur: " + data.erreur);
+            }
+        } catch(e) {}
+    }, 5000);
+}
+
+function afficherRapportSmart(rapport, nom) {
+    if (!rapport || rapport.erreur) { afficherToast("❌ Erreur: " + (rapport?.erreur || "données invalides")); return; }
+    rapportComplet = rapport.resultats || [];
+    document.getElementById("sr-total").textContent = rapport.total_tests || 0;
+    document.getElementById("sr-succes").textContent = rapport.nb_succes || 0;
+    document.getElementById("sr-echecs").textContent = rapport.nb_echecs || 0;
+    document.getElementById("sr-taux").textContent = (rapport.taux_succes || 0) + "%";
+    const recSection = document.getElementById("smart-recommandations");
+    const recBody = document.getElementById("smart-recommandations-body");
+    if (rapport.recommandations && rapport.recommandations.length > 0) {
+        recSection.style.display = "block";
+        recBody.innerHTML = rapport.recommandations.map(r => '<div class="recommandation">⚠️ ' + r + '</div>').join('');
+    } else { recSection.style.display = "none"; }
+    afficherResultatsFiltres('tous');
+    document.getElementById("smart-rapport").style.display = "block";
+    document.getElementById("smart-rapport").scrollIntoView({behavior: "smooth"});
+}
+function exporterRapportHTML() {
+    if (!rapportComplet || rapportComplet.length === 0) {
+        afficherToast("⚠️ Aucun rapport à exporter");
+        return;
+    }
+
+    const total = document.getElementById("sr-total").textContent;
+    const succes = document.getElementById("sr-succes").textContent;
+    const echecs = document.getElementById("sr-echecs").textContent;
+    const taux = document.getElementById("sr-taux").textContent;
+    const dateExport = new Date().toLocaleString();
+
+    const lignesResultats = rapportComplet.map(r => `
+        <tr>
+            <td>${r.champ_teste || ""}</td>
+            <td>${r.type_champ || ""}</td>
+            <td>${r.valeur_utilisee || ""}</td>
+            <td>${r.contrainte || ""}</td>
+            <td>${r.resultat_obtenu || ""}</td>
+            <td style="font-weight:bold;color:${r.statut === 'succes' ? '#22c55e' : '#ef4444'}">${r.statut || ""}</td>
+        </tr>
+    `).join("");
+
+    const htmlExport = `
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Rapport Smart Test — ${dateExport}</title>
+<style>
+    body { font-family: Arial, sans-serif; margin: 32px; color: #1e293b; }
+    h1 { color: #1d4ed8; }
+    .stats { display: flex; gap: 16px; margin-bottom: 24px; }
+    .stat { border: 1px solid #cbd5e1; border-radius: 8px; padding: 16px; text-align: center; flex: 1; }
+    .stat h2 { margin: 0; font-size: 28px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+    th, td { border: 1px solid #cbd5e1; padding: 8px 12px; text-align: left; font-size: 13px; }
+    th { background: #f1f5f9; }
+    tr:nth-child(even) { background: #f8fafc; }
+</style>
+</head>
+<body>
+    <h1>🤖 Rapport Smart Test</h1>
+    <p>Exporté le : ${dateExport}</p>
+    <div class="stats">
+        <div class="stat"><h2>${total}</h2><p>Tests exécutés</p></div>
+        <div class="stat"><h2 style="color:#22c55e">${succes}</h2><p>Succès</p></div>
+        <div class="stat"><h2 style="color:#ef4444">${echecs}</h2><p>Échecs</p></div>
+        <div class="stat"><h2 style="color:#d97706">${taux}</h2><p>Taux de réussite</p></div>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Champ</th><th>Type</th><th>Valeur testée</th>
+                <th>Contrainte</th><th>Résultat</th><th>Statut</th>
+            </tr>
+        </thead>
+        <tbody>${lignesResultats}</tbody>
+    </table>
+</body>
+</html>`;
+
+    const blob = new Blob([htmlExport], { type: "text/html" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `rapport_smart_test_${Date.now()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    afficherToast("✅ Rapport exporté !");
+}
+function filtrerRapport(filtre, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    afficherResultatsFiltres(filtre);
+}
+
+function afficherResultatsFiltres(filtre) {
+    let resultats = rapportComplet;
+    if(filtre==='valide')   resultats = rapportComplet.filter(r=>r.type==='valide');
+    if(filtre==='invalide') resultats = rapportComplet.filter(r=>r.type==='invalide');
+    if(filtre==='echec')    resultats = rapportComplet.filter(r=>r.statut==='echec');
+    const body = document.getElementById("smart-resultats-body");
+    if(!resultats.length){ body.innerHTML='<div class="empty-state"><div class="icon">🔍</div><p>Aucun résultat pour ce filtre</p></div>'; return; }
+    body.innerHTML = resultats.map(r => {
+        const couleur = r.statut==='succes'?'#22c55e':'#ef4444';
+        const emoji = r.statut==='succes'?'✅':'❌';
+        const screenshot = r.screenshot ? '<details style="margin-top:8px;"><summary style="font-size:11px;color:#64748b;cursor:pointer;">📸 Voir screenshot</summary><img class="screenshot-img" src="data:image/png;base64,'+r.screenshot+'"/></details>' : '';
+        return '<div class="rapport-card '+r.statut+'">'+
+            '<h5>'+emoji+' '+r.nom+'</h5>'+
+            '<div class="rapport-meta">'+
+            '<span>🏷️ Champ : <span class="val">'+(r.champ_teste||'tous')+'</span></span>'+
+            '<span>📋 Type : <span class="val">'+(r.type_champ||'-')+'</span></span>'+
+            '<span>💾 Valeur : <span class="val">'+((r.valeur_utilisee||'-').slice(0,40))+'</span></span>'+
+            '<span>🔒 Contrainte : '+(r.contrainte||'-')+'</span>'+
+            '<span>🎯 Attendu : '+(r.resultat_attendu||'-')+'</span>'+
+            '<span>📊 Obtenu : <span class="'+(r.statut==='succes'?'ok':'ko')+'">'+(r.resultat_obtenu||'-')+'</span></span>'+
+            '<span style="background:'+(r.statut==='succes'?'#14532d':'#450a0a')+';color:'+couleur+';padding:2px 8px;border-radius:4px;font-weight:700;">'+emoji+' '+r.statut.toUpperCase()+'</span>'+
+            '</div>'+screenshot+'</div>';
+    }).join('');
+}
+async function chargerHistoriqueSmart() {
+    const historique = await fetch(`${API}/api/smart-test/historique`).then(r=>r.json());
+    const body = document.getElementById("smart-historique-body");
+    if(!historique.length) {
+        body.innerHTML = '<div class="empty-state"><div class="icon">📚</div><p>Aucun Smart Test exécuté encore</p></div>';
+        return;
+    }
+    body.innerHTML = historique.map(h =>
+        '<div class="smart-session-card"><div><h4 style="font-size:15px;margin-bottom:4px;">📊 '+h.nom_session+'</h4>'+
+        '<div style="font-size:12px;color:#64748b;display:flex;gap:12px;"><span>✅ '+h.succes+' succès</span><span>❌ '+h.echecs+' échecs</span><span>📊 '+h.taux+'%</span><span>📅 '+h.date_execution+'</span></div></div>'+
+        '<div style="display:flex;gap:8px;">'+
+        '<button class="btn btn-secondary" onclick="voirRapportHistorique('+h.id+')">👁 Voir le rapport</button>'+
+        '<button class="btn btn-danger" onclick="supprimerRapportHistorique('+h.id+')">🗑️</button>'+
+        '</div></div>'
+    ).join('');
+}
+
+async function supprimerRapportHistorique(id) {
+    if(!confirm("Supprimer ce rapport ?")) return;
+    await fetch(`${API}/api/smart-test/historique/${id}`, {method:"DELETE"});
+    afficherToast("🗑️ Rapport supprimé");
+    await chargerHistoriqueSmart();
+}
+
+async function voirRapportHistorique(id) {
+    const rapport = await fetch(`${API}/api/smart-test/historique/${id}`).then(r=>r.json());
+    afficherRapportSmart({
+        total_tests: rapport.total,
+        nb_succes: rapport.succes,
+        nb_echecs: rapport.echecs,
+        taux_succes: rapport.taux,
+        resultats: rapport.resultats,
+        recommandations: rapport.recommandations
+    }, rapport.nom_session);
+}
+
+// ═══════ UTILS ═══════
+function fermerModal(id) { document.getElementById(id).classList.remove("open"); }
+function afficherToast(msg) { const t=document.getElementById("toast"); t.textContent=msg; t.style.display="block"; setTimeout(()=>t.style.display="none",3000); }
+window.onload = () => { const u=localStorage.getItem("platform_user"); if(u){currentUser=u;afficherWelcome();} };
 </script>
 </body>
 </html>

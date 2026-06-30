@@ -1,0 +1,5 @@
+nom,instruction,url,categorie
+Login valide maryem,Connecte-toi avec username=maryem et password=pfa2025 vérifie que tu arrives sur le dashboard,http://127.0.0.1:5000/login,Authentification
+Déconnexion,Connecte-toi avec username=admin et password=1234 puis clique sur Se déconnecter,http://127.0.0.1:5000/login,Authentification
+Login champs vides,Clique sur le bouton login sans remplir les champs vérifie que c'est refusé,http://127.0.0.1:5000/login,Sécurité
+Accès direct dashboard,Accède directement à http://127.0.0.1:5000/dashboard sans connexion,http://127.0.0.1:5000/dashboard,Sécurité

@@ -1,36 +1,42 @@
 import os
-from groq import Groq
+import ollama
 from playwright.sync_api import sync_playwright
 from dotenv import load_dotenv
 
 load_dotenv()
 
-client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+# Nom du modèle local installé via "ollama pull llama3.2:3b"
+MODELE_LOCAL = "llama3.1:8b"
 
 def demander_agent(instruction, contexte_page, historique):
     historique_str = "\n".join(historique) if historique else "Aucune action encore"
-    
-    response = client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
+
+    response = ollama.chat(
+        model=MODELE_LOCAL,
         messages=[
             {
                 "role": "system",
-                "content": """Tu es un agent de test web. 
-                Tu reçois une instruction, le contenu de la page actuelle, et l'historique des actions déjà faites.
-                Tu réponds avec UNE SEULE action à la fois, rien d'autre, aucune explication.
-                
-                Format STRICT (une seule ligne) :
-                GOTO: <url>
-                CLICK: <sélecteur CSS>
-                FILL: <sélecteur CSS> | <texte>
-                DONE: <résultat du test>
-                
-                RÈGLES IMPORTANTES :
-                - Ne répète JAMAIS une action déjà faite
-                - Si tu es déjà sur la bonne page, passe à l'étape suivante
-                - Pour chercher sur Google, utilise FILL: textarea | <texte>
-                - Quand l'objectif est atteint, utilise DONE
-                """
+                "content": """Tu es un agent de test web.
+Tu réponds avec UNE SEULE action à la fois, rien d'autre.
+
+Format STRICT (une seule ligne) :
+GOTO: <url>
+CLICK: <sélecteur CSS>
+FILL: <sélecteur CSS> | <texte>
+DONE: <résultat du test>
+
+RÈGLES :
+- Ne répète jamais une action déjà faite
+- Pour remplir username utilise: FILL: #username | valeur
+- Pour remplir password utilise: FILL: #password | valeur
+- Pour soumettre le formulaire utilise: CLICK: #btn-login
+- Pour se déconnecter utilise: CLICK: a[href='/logout']
+- Si tu vois "Bonjour" ou "Tableau de bord" -> DONE: succès - connecté au dashboard
+- Si tu vois "Identifiants incorrects" -> DONE: succès - login refusé comme attendu
+- Si redirigé vers /login depuis /dashboard -> DONE: succès - accès refusé comme attendu
+- Si formulaire vide soumis et toujours visible -> DONE: succès - champs vides refusés
+- Si après déconnexion tu vois page accueil -> DONE: succès - déconnexion réussie
+"""
             },
             {
                 "role": "user",
@@ -46,8 +52,11 @@ Quelle est la prochaine action à faire ? (UNE SEULE ligne)"""
             }
         ]
     )
-    premiere_ligne = response.choices[0].message.content.strip().split("\n")[0]
+    # Structure de réponse Ollama différente de Groq :
+    # response["message"]["content"] au lieu de response.choices[0].message.content
+    premiere_ligne = response["message"]["content"].strip().split("\n")[0]
     return premiere_ligne
+
 
 def executer_action(page, action):
     action = action.strip()
@@ -65,7 +74,7 @@ def executer_action(page, action):
             page.click(selecteur, timeout=5000)
             page.wait_for_timeout(1000)
             print(f"✅ Clic sur : {selecteur}")
-        except:
+        except Exception:
             print(f"⚠️ Clic échoué sur : {selecteur}")
 
     elif action.startswith("FILL:"):
@@ -80,7 +89,7 @@ def executer_action(page, action):
                 page.keyboard.press("Enter")
                 page.wait_for_timeout(1000)
                 print(f"✅ Entrée appuyée")
-        except:
+        except Exception:
             print(f"⚠️ Remplissage échoué : {selecteur}")
 
     elif action.startswith("DONE:"):
@@ -89,6 +98,7 @@ def executer_action(page, action):
         return True, resultat
 
     return False, None
+
 
 def lancer_test(nom_test, instruction, url_depart):
     print(f"\n🚀 Lancement : {nom_test}")
@@ -99,7 +109,7 @@ def lancer_test(nom_test, instruction, url_depart):
     resultat_final = "non terminé"
 
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
+        browser = p.chromium.launch(headless=False)
         page = browser.new_page()
         page.goto(url_depart)
         page.wait_for_timeout(2000)
@@ -119,4 +129,3 @@ def lancer_test(nom_test, instruction, url_depart):
         browser.close()
 
     return resultat_final
-
